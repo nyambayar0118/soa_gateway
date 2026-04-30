@@ -4,24 +4,19 @@ server:
 spring:
   application:
     name: soa-gateway
-
   cloud:
     gateway:
-      # Disable the default discovery-based routing — we define routes manually in GatewayConfig.java
       discovery:
         locator:
           enabled: false
-
-  # Gateway is WebFlux — no Spring Security auto-config needed
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
       - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
 
 jwt:
-  secret: mysecretkey12345678901234567890ab
+  secret: ${JWT_SECRET:?JWT_SECRET must be set}
 
-# Downstream service base URLs — override via env vars at deploy time
 services:
   auth:        ${AUTH_SERVICE_URL:http://localhost:8080}
   profile:     ${PROFILE_SERVICE_URL:http://localhost:8081}
@@ -29,5 +24,5 @@ services:
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    mn.icsi437.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
+    mn.icsi437.gateway: INFO
