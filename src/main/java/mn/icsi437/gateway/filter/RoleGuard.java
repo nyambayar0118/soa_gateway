@@ -17,6 +17,8 @@ public class RoleGuard {
         @SuppressWarnings("unchecked")
         List<String> roles = claims.get("roles", List.class);
         if (roles == null) roles = List.of();
+        
+        System.out.println("[RoleGuard] path=" + path + " method=" + method + " roles=" + roles);
 
         boolean isAdmin = roles.contains("ROLE_ADMIN");
         boolean isUser  = roles.contains("ROLE_USER") || isAdmin; // admin inherits user
